@@ -1,19 +1,109 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Kas Perencana</title>
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
-<meta name="theme-color" content="#ec4899"><meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Kas Perencana">
-<style>html,body{margin:0;height:100%;background:#fff5f8;font-family:system-ui,sans-serif;color:#9a7b8a}
-#l{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px}
-#l b{font-size:56px;animation:w 2s infinite}@keyframes w{50%{transform:rotate(12deg) scale(1.1)}}
-iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:transparent}</style></head><body>
-<div id="l"><b>🌸</b><div id="t">Memuat Kas Perencana…<br>Pastikan internet aktif</div></div>
-<iframe id="f" allow="camera; clipboard-write" title="Kas Perencana"></iframe>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ec4899"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Kas Perencana"><script src="config.js"></script>
+<style>
+:root{--p:#db2777;--bg:#fff5f8;--c:#fff;--t:#4a2a3a;--m:#9a7b8a;--r:#e11d48;--g:#16a34a}
+@media(prefers-color-scheme:dark){:root{--bg:#2a1620;--c:#3a2230;--t:#ffe9f1;--m:#d9a9bd}}
+*{box-sizing:border-box}body{margin:0;font:17px "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--t);padding-bottom:80px}
+header{background:linear-gradient(135deg,#ec4899,#f97316);color:#fff;padding:env(safe-area-inset-top) 16px 0;position:sticky;top:0;z-index:5}header div{padding:14px 0;font-weight:700;font-size:18px}
+main{padding:12px;max-width:640px;margin:auto}.card{background:var(--c);border-radius:24px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px #0001}
+.big{font-size:28px;font-weight:800}.m{color:var(--m);font-size:13px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #8882}
+.row:last-child{border:0}.in{color:var(--g);font-weight:700}.out{color:var(--r);font-weight:700}.bar{height:8px;background:var(--p);border-radius:4px;margin-top:4px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--c);display:flex;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 8px #0002;z-index:5}
+nav b{flex:1;text-align:center;padding:10px 0;font-size:12px;color:var(--m);font-weight:500}nav b.on{color:var(--p);font-weight:700}nav i{display:block;font-style:normal;font-size:20px}
+button{background:var(--p);color:#fff;border:0;border-radius:16px;padding:14px 18px;font-size:16px;font-weight:600}button.g{background:#8883;color:var(--t)}button.s{padding:10px 14px;font-size:14px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #8885;border-radius:10px;font-size:16px;background:var(--bg);color:var(--t);margin:4px 0 10px}
+#m:not(:empty){position:fixed;inset:0;background:#0008;z-index:9;display:flex;align-items:flex-end}.mb{background:var(--c);width:100%;max-height:90%;overflow:auto;padding:16px;border-radius:18px 18px 0 0}
+.fab{position:fixed;right:16px;bottom:84px;border-radius:30px;padding:14px 20px;box-shadow:0 3px 10px #0004;z-index:4}
+.badge{background:#dc262622;color:var(--r);border-radius:8px;padding:2px 8px;font-size:12px}.ok{background:#16a34a22;color:var(--g)}
+.note{display:inline-block;width:48%;vertical-align:top;margin:1%;padding:10px;border-radius:6px;color:#333;font-size:14px;box-shadow:2px 3px 5px #0003}
+h3{margin:4px 0 8px}.av{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;margin-right:10px;flex:none}.ch{display:block;width:100%;text-align:left;margin-bottom:10px;padding:18px}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:5px;border-bottom:1px solid #8883;text-align:left}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes pop{from{transform:scale(.6)}60%{transform:scale(1.25)}to{transform:scale(1)}}@keyframes pls{50%{transform:scale(1.07)}}@keyframes wig{50%{transform:rotate(12deg) scale(1.1)}}
+.card{animation:up .4s both}.card:nth-child(2){animation-delay:.07s}.card:nth-child(3){animation-delay:.14s}.card:nth-child(4){animation-delay:.21s}.mb{animation:up .3s}nav b.on i{animation:pop .35s}.fab{animation:pls 2.5s infinite}.bar{transition:width .8s}button{transition:transform .15s}button:active{transform:scale(.93)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+.toast{position:fixed;left:0;right:0;margin:auto;width:max-content;max-width:90%;bottom:96px;background:#3b1f2b;color:#fff;padding:12px 20px;border-radius:22px;z-index:20;animation:up .3s;text-align:center}
+@media print{header,nav,.fab,.np{display:none!important}body{background:#fff;color:#000}.card{box-shadow:none}}
+</style></head><body>
+<div id="app"><div style="padding:60px 20px;text-align:center;font-size:18px">🌸 Memuat…</div></div><div id="m"></div>
 <script>
-// GANTI tulisan di bawah ini dengan link deployment Apps Script (yang berakhiran /exec)
-const APP_URL='https://script.google.com/macros/s/AKfycbza_RTv9kj99-x8Tt280tLd7KLUuKp0WL5HDU6-TjqEsX-uffXIXYcC7azJBaLzrik2PQ/exec';
-if(APP_URL.startsWith('http'))document.getElementById('f').src=APP_URL;
-else document.getElementById('t').textContent='Link aplikasi belum diisi di file index.html';
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+window.onerror=function(m,u,l){document.body.insertAdjacentHTML('afterbegin','<div style="background:#fff;color:#b91c1c;padding:14px;font:14px monospace;position:relative;z-index:99">Error: '+m+' (baris '+l+')</div>')};
+setTimeout(function(){if(typeof loginUI!=='function')document.getElementById('app').innerHTML='<div style="padding:30px;font-size:16px;line-height:1.5">⚠️ Skrip aplikasi tidak berjalan.<br>Muat ulang halaman. Jika tetap begini, hubungi pembuat aplikasi.</div>'},2500);
+</script>
+<script>
+let T,R,D,tab='home';const $=s=>document.querySelector(s),M=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID'),esc=s=>String(s??'').replace(/[&<>"]/g,c=>'&#'+c.charCodeAt()+';'),today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const BASE=2025*12+7,now=new Date(),CUR=now.getFullYear()*12+now.getMonth(),lbl=i=>['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][i%12]+' '+Math.floor(i/12);
+const lunas=a=>lbl(BASE+a[4]-1),tung=a=>Math.max(0,CUR-BASE+1-a[4]);
+const call=b=>fetch(APP_URL,{method:'POST',body:JSON.stringify(b)}).then(r=>r.json());
+const NET='Tidak bisa terhubung. Periksa internet Anda ya.';
+const run=(fn,a)=>call({t:T,fn,a:a||{}}).then(o=>{if(!o.ok){if(/SESI/.test(o.err))location.reload();else alert(o.err);throw o.err}return o.d},e=>{alert(NET);throw e});
+const comp=f=>new Promise(ok=>{if(!f)return ok('');const i=new Image;i.onload=()=>{const s=Math.min(1,1000/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.7))};i.src=URL.createObjectURL(f)});
+const sum=(l,j)=>l.filter(t=>t[2]==j).reduce((s,t)=>s+t[5],0);
+
+function loginUI(){$('#app').innerHTML=`<main style="padding-top:12vh"><div class=card><div style="font-size:54px;text-align:center;animation:wig 2.5s infinite">🌸</div><h3 style="font-size:24px;text-align:center">Kas Perencana</h3><p class=m style="text-align:center">Silakan masuk dulu ya 😊</p>
+<select id=lr><option value=bendahara>Bu Efrya (Bendahara)</option><option value=admin>Admin</option></select><input id=lp type=password placeholder="Password"><button id=lb style="width:100%" onclick=doLogin()>Masuk</button></div></main>`}
+function doLogin(){$('#lb').textContent='Memeriksa…';call({fn:'login',role:$('#lr').value,pw:$('#lp').value}).then(r=>{$('#lb').textContent='Masuk';if(!r.ok)return alert('Password salah');T=r.t;load()},()=>{$('#lb').textContent='Masuk';alert(NET)})}
+async function load(){D=await run('data');R=D.r;draw()}
+
+function form(title,F,cb){
+  $('#m').innerHTML=`<div class=mb><h3>${title}</h3>${F.map(f=>`<label class=m>${f[1]}</label>`+(f[2]=='date'?dp('f_'+f[0],f[3]):f[2]=='select'?`<select id=f_${f[0]}>${f[4].map(o=>`<option ${o==f[3]?'selected':''}>${o}</option>`).join('')}</select>`:f[2]=='area'?`<textarea id=f_${f[0]} rows=4>${esc(f[3])}</textarea>`:`<input id=f_${f[0]} type=${f[2]} value="${esc(f[3])}" ${f[2]=='file'?'accept="image/*"':''}>`)).join('')}
+<button id=sv>Simpan</button> <button class=g onclick="$('#m').innerHTML=''">Batal</button></div>`;
+  $('#sv').onclick=async()=>{const v={};for(const f of F){const e=$('#f_'+f[0]);v[f[0]]=f[2]=='file'?await comp(e.files[0]):f[2]=='date'?dv('f_'+f[0]):e.value}
+    $('#sv').disabled=1;$('#sv').textContent='Menyimpan…';try{await cb(v);$('#m').innerHTML='';toast('Tersimpan ✅');await load()}catch(e){$('#sv').disabled=0;$('#sv').textContent='Simpan'}}}
+
+function draw(){
+  const t=D.t,masuk=sum(t,'M'),keluar=sum(t,'K'),tg=D.a.reduce((s,a)=>s+tung(a),0)*10000;
+  const titles={home:'Beranda',kas:'Buku Kas',iuran:'Iuran Anggota',lap:'Laporan',more:'Lainnya'};
+  let h=`<header><div>${titles[tab]} <button class=s style="float:right;background:#fff3;padding:6px 12px;margin-top:-4px" onclick=out()>🚪 Keluar</button></div></header><main>`;
+  if(tab=='home'){
+    const kat={};t.filter(x=>x[2]=='K').forEach(x=>kat[x[3]]=(kat[x[3]]||0)+x[5]);const mx=Math.max(1,...Object.values(kat));
+    const bd=D.a.map(a=>{const[y,m,d]=a[3].split('-').map(Number);let n=new Date(now.getFullYear(),m-1,d);const z=new Date(now.getFullYear(),now.getMonth(),now.getDate());if(n<z)n.setFullYear(n.getFullYear()+1);return[a[1],Math.round((n-z)/864e5),d,m,now.getFullYear()-y+(n.getFullYear()-now.getFullYear())]}).sort((a,b)=>a[1]-b[1]).slice(0,3);
+    h+=`<div class=card style="background:linear-gradient(135deg,#fce7f3,#ffedd5);color:#4a2a3a;--m:#9a7b8a"><div>Halo, ${R=='admin'?'Admin':'Bu Efrya'} 🌸</div><div class=m>Saldo Kas</div><div class=big>${rp(masuk-keluar)}</div><div class=m><span class=in>▲ ${rp(masuk)}</span> &nbsp; <span class=out>▼ ${rp(keluar)}</span></div></div>
+    <div class=card><b>🎂 Ulang Tahun Terdekat</b>${bd.map(b=>`<div class=row><span>${esc(b[0])}<br><span class=m>${b[2]} ${M[b[3]-1]} • ke-${b[4]}</span></span><span class="badge ${b[1]?'ok':''}">${b[1]?b[1]+' hari lagi':'HARI INI 🎉'}</span></div>`).join('')}</div>
+    <div class=card><b>Tunggakan iuran</b><div class="big out">${rp(tg)}</div><div class=m>${D.a.filter(a=>tung(a)).length} anggota belum lunas s/d ${lbl(CUR)}</div></div>
+    <div class=card><b>Pengeluaran per Kategori</b>${Object.entries(kat).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div style="margin-top:10px"><div class=row style="border:0;padding:0"><span>${esc(k)}</span><span>${rp(v)}</span></div><div class=bar style="width:${v/mx*100}%"></div></div>`).join('')}</div>`}
+  if(tab=='kas'){h+=`<div class=card style="background:#fef3c7;color:#78350f">💡 Salah catat? Tekan <b>✎</b> untuk memperbaiki atau <b>✕</b> untuk menghapus. Iuran yang salah dihapus saja lalu dicatat ulang di menu Iuran.</div><div class=card>${[...t].sort((a,b)=>b[1].localeCompare(a[1])).map(x=>`<div class=row><span style="flex:1">${esc(x[4])}<br><span class=m>${fd(x[1])} • ${esc(x[3])} ${x[6]?`• <a href="${esc(x[6])}" target=_blank>📎 bukti</a>`:''}</span></span><span class=${x[2]=='M'?'in':'out'}>${x[2]=='M'?'+':'-'}${rp(x[5])}</span><span style="display:flex;gap:6px">${x[7]?'':`<button class="g s" onclick="editT('${x[0]}')">✎</button>`}<button class="g s" onclick="delT('${x[0]}')">✕</button></span></div>`).join('')}</div><button class=fab onclick=pilih()>＋ Catat</button>`}
+  if(tab=='iuran'){h+=`<div class=card style="background:#fef3c7;color:#78350f">💡 Ada yang bayar iuran? Tekan <b>Terima Iuran</b> di samping namanya. Uang masuk tercatat otomatis.</div><div class=card>${D.a.map(a=>`<div class=row><span class=av style="background:hsl(${a[1].charCodeAt(0)*37%360},60%,60%)">${esc(a[1][0])}</span><span style="flex:1"><b>${esc(a[1])}</b><br>${tung(a)?`<span class=badge>⏰ Belum bayar ${tung(a)} bulan</span>`:'<span class="badge ok">✅ Lunas</span>'}<br><span class=m>Dibayar sampai ${lunas(a)}</span></span><span style="display:flex;flex-direction:column;gap:6px">${tung(a)?`<button class="g s" onclick="wa('${a[0]}')">💬 Ingatkan</button>`:''}<button class=s onclick="pay('${a[0]}')">💰 Terima Iuran</button></span></div>`).join('')}</div>`}
+  if(tab=='lap'){h+=`<div class="card np"><label class=m>Dari</label>${dp('d1',today().slice(0,8)+'01')}<label class=m>Sampai</label>${dp('d2',today())}<button class=s onclick="rng(7)">7 hari</button> <button class=s onclick="rng(30)">30 hari</button> <button onclick=rep()>Tampilkan</button></div><div id=rp></div>`}
+  if(tab=='more'){
+    h+=`<div class=card><b>📝 Catatan Cepat</b> <button class=s style="float:right" onclick=addN()>＋</button><div style="margin-top:8px">${D.c.map(n=>`<div class=note style="background:${esc(n[2])}" onclick="editN('${n[0]}')">${esc(n[1])}</div>`).join('')||'<span class=m>Belum ada catatan</span>'}</div></div>
+    <div class=card><b>👥 Anggota</b> <button class=s style="float:right" onclick="editA()">＋ Tambah</button>${D.a.map(a=>`<div class=row onclick="editA('${a[0]}')"><span>${esc(a[1])}<br><span class=m>${esc(a[2])||'No HP kosong'} • lahir ${fd(a[3])}</span></span><span>✎</span></div>`).join('')}</div>
+    <div class=card><button style="width:100%" onclick=chPw()>🔑 Ganti Password Saya</button></div>`;
+    if(R=='admin')h+=`<div class=card><b>🛡 Admin</b><br><br><button class=s onclick="rst()">Reset Password</button> <button class=s onclick="run('admBackup').then(()=>alert('Backup tersimpan di Drive'))">Backup Sekarang</button><div style="margin-top:10px;max-height:240px;overflow:auto">${D.l.map(l=>`<div class=m>${l[0]} • ${l[1]} • ${esc(l[2])}</div>`).join('')}</div></div>`;
+    h+=`<div class=card><button class=g style="width:100%" onclick=location.reload()>Keluar</button></div>`}
+  $('#app').innerHTML=h+`</main><nav>${[['home','🏠','Beranda'],['iuran','💵','Iuran'],['kas','📒','Buku Kas'],['lap','📊','Laporan'],['more','☰','Lainnya']].map(n=>`<b class="${tab==n[0]?'on':''}" onclick="tab='${n[0]}';draw();scrollTo(0,0)"><i>${n[1]}</i>${n[2]}</b>`).join('')}</nav>`}
+
+const KAT=['Tali Asih','Konsumsi','Operasional','Lainnya'],KM=['Donasi','Lainnya'];
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2800)}
+window.alert=toast;
+function ask(msg,cb,yes){$('#m').innerHTML=`<div class=mb><h3 style="text-align:center">${msg}</h3><button class=ch style="text-align:center" id=ay>${yes||'Ya'}</button><button class="g ch" style="text-align:center" onclick="$('#m').innerHTML=''">Batal</button></div>`;$('#ay').onclick=async()=>{$('#m').innerHTML='';await cb()}}
+const out=()=>ask('Yakin mau keluar?',()=>location.reload(),'🚪 Ya, keluar');
+const MF=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],fd=x=>x.split('-').reverse().join('/');
+function dp(id,v){const[y,m,d]=v.split('-').map(Number),Y=y<2020?[1940,2012]:[2025,2032],o=(a,b,sel,f)=>{let h='';for(let i=a;i<=b;i++)h+=`<option value=${i} ${i==sel?'selected':''}>${f?f(i):i}</option>`;return h};
+return `<div id=${id} style="display:flex;gap:6px"><select style="flex:2">${o(1,31,d)}</select><select style="flex:3">${o(1,12,m,i=>MF[i-1])}</select><select style="flex:3">${o(Y[0],Y[1],y)}</select></div>`}
+const dv=id=>{const s=[...document.querySelectorAll('#'+id+' select')].map(e=>+e.value),d=Math.min(s[0],new Date(s[2],s[1],0).getDate());return s[2]+'-'+String(s[1]).padStart(2,'0')+'-'+String(d).padStart(2,'0')};
+const ds=(id,v)=>{const[y,m,d]=v.split('-').map(Number);[...document.querySelectorAll('#'+id+' select')].forEach((e,i)=>e.value=[d,m,y][i])};
+function pilih(){$('#m').innerHTML=`<div class=mb><h3>Mau catat apa?</h3><button class=ch onclick="addT('K')">🛒 Belanja / Pengeluaran<br><small>Jajan, tali asih, dll</small></button><button class=ch onclick="addT('M')">🎁 Uang masuk selain iuran<br><small>Donasi, dll</small></button><div class=m>Iuran anggota dicatat di menu <b>Iuran</b> ya 😊</div><br><button class=g onclick="$('#m').innerHTML=''">Batal</button></div>`}
+function addT(j){form(j=='M'?'🎁 Uang Masuk Lainnya':'🛒 Catat Belanja / Pengeluaran',[['tgl','Tanggal','date',today()],['kategori','Jenisnya','select','',j=='M'?KM:KAT],['uraian','Uraian','text',''],['jumlah','Jumlah (Rp)','number',''],['foto','Foto bukti (opsional)','file']],v=>{if(!v.uraian||!(+v.jumlah>0)){alert('Lengkapi uraian & jumlah');throw 0}return run('addTrx',{...v,jenis:j})})}
+const delT=id=>{const x=D.t.find(t=>t[0]==id);ask(x[7]?'Hapus catatan iuran ini? Status iuran anggota akan mundur '+x[8]+' bulan.':'Hapus transaksi ini?',()=>run('delTrx',{id}).then(()=>{toast('Terhapus ✅');return load()}),'🗑 Ya, hapus')};
+function editT(id){const x=D.t.find(t=>t[0]==id),k=[...new Set([...(x[2]=='M'?KM:KAT),x[3]])];form('✎ Perbaiki Catatan',[['tgl','Tanggal','date',x[1]],['kategori','Jenisnya','select',x[3],k],['uraian','Uraian','text',x[4]],['jumlah','Jumlah (Rp)','number',x[5]],['foto','Ganti foto bukti (opsional)','file']],v=>{if(!v.uraian||!(+v.jumlah>0)){alert('Lengkapi uraian & jumlah');throw 0}return run('editTrx',{id,...v})})}
+const delA=id=>{const a=D.a.find(x=>x[0]==id);ask('Hapus anggota '+esc(a[1])+'? Riwayat kas tetap tersimpan.',()=>run('delAnggota',{id}).then(()=>{toast('Terhapus ✅');return load()}),'🗑 Ya, hapus')};
+function pay(id){const a=D.a.find(x=>x[0]==id);form('Terima iuran '+a[1],[['n','Bayar untuk berapa bulan? (Rp10.000/bulan)','number',Math.max(1,tung(a))],['tgl','Tanggal terima','date',today()]],v=>run('bayar',{id,...v}));
+const pv=()=>{const n=Math.max(0,+$('#f_n').value||0);$('#pv').innerHTML=`Sekarang dibayar sampai <b>${lunas(a)}</b><br>Setelah ini jadi <b>${lbl(BASE+a[4]+n-1)}</b> ✅<br>Uang masuk: <b>${rp(n*1e4)}</b>`};
+$('#sv').insertAdjacentHTML('beforebegin','<div id=pv class=card style="background:#dcfce7;color:#14532d"></div>');$('#f_n').oninput=pv;pv()}
+function wa(id){const a=D.a.find(x=>x[0]==id);let p=String(a[2]).replace(/[^0-9]/g,'');if(!p)return alert('Isi No HP dulu di Lainnya > Anggota');if(p[0]=='0')p='62'+p.slice(1);
+  open('https://wa.me/'+p+'?text='+encodeURIComponent(`Assalamualaikum ${a[1].split(' ')[0]}, izin mengingatkan iuran kas Perencana Rp10.000/bulan. Tercatat lunas s/d ${lunas(a)}, tunggakan ${tung(a)} bulan (${rp(tung(a)*1e4)}). Terima kasih 🙏`))}
+function editA(id){const a=D.a.find(x=>x[0]==id)||['','','','1990-01-01'];form(id?'Edit Anggota':'Tambah Anggota',[['nama','Nama','text',a[1]],['hp','No HP (08…)','tel',a[2]],['lahir','Tanggal lahir','date',a[3]]],v=>run('saveAnggota',{id,...v}));if(id)$('#sv').insertAdjacentHTML('afterend',` <button class=g onclick="delA('${id}')">🗑 Hapus</button>`)}
+const CL={Kuning:'#fde68a',Hijau:'#bbf7d0',Biru:'#bfdbfe',Pink:'#fbcfe8'},addN=()=>editN(),delN=id=>ask('Hapus catatan ini?',()=>run('delNote',{id}).then(()=>{toast('Terhapus ✅');return load()}),'🗑 Ya, hapus');
+function editN(id){const n=D.c.find(x=>x[0]==id)||['','','#fde68a'];form(id?'Ubah Catatan':'Catatan Baru',[['teks','Isi catatan','area',n[1]],['warna','Warna','select',Object.keys(CL).find(k=>CL[k]==n[2])||'Kuning',Object.keys(CL)]],v=>run('saveNote',{id,teks:v.teks,warna:CL[v.warna]}));if(id)$('#sv').insertAdjacentHTML('afterend',` <button class=g onclick="delN('${id}')">🗑 Hapus</button>`)}
+function chPw(){form('Ganti Password',[['old','Password lama','password',''],['pw','Password baru (min. 6)','password','']],v=>run('chPw',v).then(()=>alert('Password diganti')))}
+function rst(){form('Reset Password',[['role','Akun','select','bendahara',['bendahara','admin']],['pw','Password baru','text','']],v=>run('admReset',v).then(()=>alert('Password direset')))}
+const NL=String.fromCharCode(10),wa2=t=>open('https://wa.me/?text='+encodeURIComponent(t));
+function waLap(){const a=dv('d1'),b=dv('d2'),all=D.t,pr=all.filter(x=>x[1]<a),aw=sum(pr,'M')-sum(pr,'K'),l=all.filter(x=>x[1]>=a&&x[1]<=b).sort((x,y)=>x[1].localeCompare(y[1])),mi=sum(l,'M'),ke=sum(l,'K'),dt=x=>x.split('-').reverse().join('/'),k=l.filter(x=>x[2]=='K');
+wa2(`*LAPORAN KAS CURHAT PERENCANA*${NL}${dt(a)} s/d ${dt(b)}${NL}${NL}Saldo awal: ${rp(aw)}${NL}Kas masuk: ${rp(mi)}${NL}Kas keluar: ${rp(ke)}${NL}*Saldo akhir: ${rp(aw+mi-ke)}*${NL}`+(k.length?`${NL}*Pengeluaran:*${NL}`+k.map(x=>`- ${dt(x[1])} ${x[4]}: ${rp(x[5])}`).join(NL)+NL:'')+`${NL}Terima kasih 🙏`)}
+function waIuran(){const b=D.a.filter(a=>tung(a));wa2(`*STATUS IURAN KAS PERENCANA*${NL}Per ${lbl(CUR)} (Rp10.000/bulan)${NL}${NL}✅ Sudah lunas: ${D.a.length-b.length} orang${NL}`+(b.length?`⏰ Belum lunas:${NL}`+b.map(a=>`- ${a[1]}: ${tung(a)} bulan (${rp(tung(a)*1e4)})`).join(NL)+NL:'')+`${NL}Mohon bantuannya ya 🙏 Terima kasih`)}
+function rng(n){ds('d1',new Date(Date.now()-n*864e5-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10));ds('d2',today());rep()}
+function rep(){const a=dv('d1'),b=dv('d2'),all=D.t,aw=sum(all.filter(x=>x[1]<a),'M')-sum(all.filter(x=>x[1]<a),'K'),l=all.filter(x=>x[1]>=a&&x[1]<=b).sort((x,y)=>x[1].localeCompare(y[1])),mi=sum(l,'M'),ke=sum(l,'K');
+  $('#rp').innerHTML=`<div class=card><h3>Laporan Kas Curhat Perencana</h3><div class=m>${fd(a)} s/d ${fd(b)}</div><div class=row><span>Saldo awal</span><b>${rp(aw)}</b></div><div class=row><span>Kas masuk</span><b class=in>${rp(mi)}</b></div><div class=row><span>Kas keluar</span><b class=out>${rp(ke)}</b></div><div class=row><span>Saldo akhir</span><b>${rp(aw+mi-ke)}</b></div>
+  <table><tr><th>Tgl<th>Uraian<th>Jumlah</tr>${l.map(x=>`<tr><td>${fd(x[1])}<td>${esc(x[4])}<td class=${x[2]=='M'?'in':'out'}>${x[2]=='M'?'+':'-'}${rp(x[5])}</tr>`).join('')}</table><br><button class=np style="width:100%;margin-bottom:8px" onclick=waLap()>📲 Kirim Laporan ke WhatsApp</button><button class="np g" style="width:100%;margin-bottom:8px" onclick=waIuran()>📲 Kirim Status Iuran ke WhatsApp</button><button class="np g" style="width:100%" onclick=print()>🖨 Cetak / Simpan PDF</button></div>`}
+loginUI();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
