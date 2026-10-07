@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kas Perencana</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#ec4899"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Kas Perencana">
+<style>html,body{margin:0;height:100%;background:#fff5f8;font-family:system-ui,sans-serif;color:#9a7b8a}
+#l{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px}
+#l b{font-size:56px;animation:w 2s infinite}@keyframes w{50%{transform:rotate(12deg) scale(1.1)}}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:transparent}</style></head><body>
+<div id="l"><b>🌸</b><div id="t">Memuat Kas Perencana…<br>Pastikan internet aktif</div></div>
+<iframe id="f" allow="camera; clipboard-write" title="Kas Perencana"></iframe>
+<script>
+// GANTI tulisan di bawah ini dengan link deployment Apps Script (yang berakhiran /exec)
+const APP_URL='https://script.google.com/macros/s/AKfycbza_RTv9kj99-x8Tt280tLd7KLUuKp0WL5HDU6-TjqEsX-uffXIXYcC7azJBaLzrik2PQ/exec';
+if(APP_URL.startsWith('http'))document.getElementById('f').src=APP_URL;
+else document.getElementById('t').textContent='Link aplikasi belum diisi di file index.html';
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+</script></body></html>
